@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Madina Hospital</title>
+    <link rel="stylesheet" href="./styles/index.css">
+    <link rel="stylesheet" href="./styles/logo.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .about-hero {
+            padding: 100px 20px;
+            background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%);
+            text-align: center;
+            color: white;
+        }
+
+        .about-hero h1 {
+            font-size: 3.2rem;
+            margin-bottom: 20px;
+        }
+
+        .about-hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .about-content {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .mission-vision {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .mission-card, .vision-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .mission-card i, .vision-card i {
+            font-size: 3rem;
+            color: #1e88e5;
+            margin-bottom: 20px;
+        }
+
+        .mission-card h2, .vision-card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .mission-card p, .vision-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .history-section {
+            margin: 60px 0;
+            text-align: center;
+        }
+
+        .history-section h2 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+
+        .history-section p {
+            color: #666;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .achievements {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+            text-align: center;
+        }
+
+        .achievement-card {
+            padding: 20px;
+        }
+
+        .achievement-card .number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #1e88e5;
+            margin-bottom: 10px;
+        }
+
+        .achievement-card .label {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        /* Footer Styles */
+        .footer {
+            background-color: #2c3e50;
+            color: white;
+            padding: 30px 0 15px;
+            margin-top: 30px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 0 30px;
+        }
+
+        .footer-section {
+            padding: 10px;
+        }
+
+        .footer-section h3 {
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            color: #1e88e5;
+            padding-bottom: 6px;
+            border-bottom: 2px solid #1e88e5;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #ecf0f1;
+            line-height: 1.4;
+            margin-bottom: 8px;
+            text-decoration: none;
+            display: block;
+            font-size: 0.95rem;
+        }
+
+        .contact-info i {
+            margin-right: 10px;
+            color: #1e88e5;
+            width: 16px;
+        }
+
+        .contact-info p {
+            display: flex;
+            align-items: center;
+            padding: 2px 0;
+        }
+
+        .quick-links a {
+            padding: 4px 0;
+            transition: all 0.3s ease;
+        }
+
+        .quick-links a:hover {
+            color: #1e88e5;
+            padding-left: 8px;
+        }
+
+        .emergency-contact {
+            background-color: #34495e;
+            padding: 8px;
+            border-radius: 6px;
+            margin-top: 12px;
+        }
+
+        .emergency-contact h4 {
+            color: #1e88e5;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 12px;
+            border-top: 1px solid #34495e;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+                padding: 0 15px;
+                gap: 15px;
+            }
+            
+            .footer-section {
+                padding: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer {
+                padding: 25px 0 12px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .about-hero h1 {
+                font-size: 2.4rem;
+            }
+
+            .about-hero p {
+                font-size: 1.1rem;
+            }
+
+            .mission-vision {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <div class="logo">
+                <a href="./index.html">
+                    <div class="logo-icon">MH</div>
+                    <div class="logo-text">
+                        <span class="hospital-name">Madina Hospital</span>
+                        <span class="tagline">Caring for Life</span>
+                    </div>
+                </a>
+            </div>
+
+            <nav class="navBar">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="register.html">Register</a></li>
+                    <li><a href="login.html">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="about-hero">
+            <h1>About Madina Hospital</h1>
+            <p>Providing exceptional healthcare services with compassion and expertise since 1995</p>
+        </section>
+
+        <div class="about-content">
+            <div class="mission-vision">
+                <div class="mission-card">
+                    <i class="fas fa-heartbeat"></i>
+                    <h2>Our Mission</h2>
+                    <p>To provide exceptional healthcare services that improve the quality of life for our patients through compassionate care, cutting-edge technology, and continuous innovation.</p>
+                </div>
+                <div class="vision-card">
+                    <i class="fas fa-star"></i>
+                    <h2>Our Vision</h2>
+                    <p>To be the leading healthcare provider known for excellence in patient care, medical innovation, and community wellness, setting new standards in healthcare delivery.</p>
+                </div>
+            </div>
+
+            <section class="history-section">
+                <h2>Our Journey</h2>
+                <p>Founded in 1995, Madina Hospital has grown from a small clinic to a comprehensive healthcare facility serving thousands of patients annually. Our commitment to excellence and patient-centered care has earned us numerous accolades and the trust of our community.</p>
+                
+                <div class="achievements">
+                    <div class="achievement-card">
+                        <div class="number">25+</div>
+                        <div class="label">Years of Service</div>
+                    </div>
+                    <div class="achievement-card">
+                        <div class="number">50+</div>
+                        <div class="label">Expert Doctors</div>
+                    </div>
+                    <div class="achievement-card">
+                        <div class="number">100K+</div>
+                        <div class="label">Patients Served</div>
+                    </div>
+                    <div class="achievement-card">
+                        <div class="number">15+</div>
+                        <div class="label">Specialties</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contact Information</h3>
+                <div class="contact-info">
+                    <p><i class="fas fa-map-marker-alt"></i> Hala Street, Jogoo District, Wajir Town, Kenya</p>
+                    <p><i class="fas fa-phone"></i> Emergency: 0722334455</p>
+                    <p><i class="fas fa-phone-alt"></i> Reception: 0798765432</p>
+                    <p><i class="fas fa-envelope"></i> info@madinahospital.com</p>
+                </div>
+                <div class="emergency-contact">
+                    <h4>24/7 Emergency</h4>
+                    <p>Call: 0722334455</p>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <div class="quick-links">
+                    <a href="index.html">Home</a>
+                    <a href="about.html">About Us</a>
+                    <a href="contact.html">Contact Us</a>
+                    
+                    <a href="index.html">Book Appointment</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Working Hours</h3>
+                <p><strong>Regular Hours:</strong></p>
+                <p>Monday - Friday: 8:00 AM - 8:00 PM</p>
+                <p>Saturday: 9:00 AM - 6:00 PM</p>
+                <p>Sunday: Emergency Only</p>
+                <p><strong>Emergency Unit:</strong></p>
+                <p>24 hours, 7 days a week</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 Madina Hospital. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

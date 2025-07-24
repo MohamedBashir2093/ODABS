@@ -1,0 +1,57 @@
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 20px;
+}
+
+.logo {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.8em;
+    font-weight: 700;
+    color: #2c3e50;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-icon {
+    width: 40px;
+    height: 40px;
+    background-color: #3498db;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.hospital-name {
+    font-size: 1.2em;
+    color: #2c3e50;
+}
+
+.tagline {
+    font-size: 0.7em;
+    color: #7f8c8d;
+    font-weight: normal;
+}
+
+@media (max-width: 768px) {
+    .logo-container {
+        justify-content: center;
+        padding: 15px;
+    }
+    
+    .logo {
+        font-size: 1.5em;
+    }
+}

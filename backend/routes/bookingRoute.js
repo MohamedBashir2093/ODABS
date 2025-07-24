@@ -1,107 +1,215 @@
 const express = require("express");
-const { Bookingmodel } = require("../models/bookingModel");
+const { BookingModel } = require("../models/bookingModel");
 const { authentication } = require("../middlewares/authenticationMiddleware");
-const {authorisation}=require("../middlewares/authorizationMiddleware");
+const { authorisation } = require("../middlewares/authorizationMiddleware");
+const { ScheduleModel } = require("../models/scheduleModel");
 const bookingRoutes = express.Router();
-const nodemailer = require("nodemailer");
 require("dotenv").config()
 
-//getting paticular user booking data
-bookingRoutes.get("/paticularUser", authentication,authorisation(["patient","doctor"]),async (req, res) => {
-    let userId = req.body.userId;
-    let role=req.body.role;
-    
+// Get particular user booking data
+bookingRoutes.get("/paticularUser", authentication, authorisation(["patient","doctor"]), async (req, res) => {
     try {
-        if(role==="patient"){
-            const reqData = await Bookingmodel.find({ userId });
-            res.json({" msg": `All booking data of userId ${userId}`, "Data": reqData })
-        }else{
-            const reqData = await Bookingmodel.find({ doctorId:userId });
-            res.json({" msg": `All booking data of userId ${userId}`, "Data": reqData })
+        console.log('Fetching appointments for user:', {
+            userId: req.body.userId,
+            role: req.body.role,
+            email: req.body.userEmail
+        });
+
+        if(!req.body.userId || !req.body.role) {
+            console.log('Missing user information');
+            return res.status(400).json({ 
+                success: false,
+                msg: "User information not found",
+                debug: { body: req.body }
+            });
         }
-        
-    } catch (error) {
-        console.log("error from getting paticular user booking data", error.message);
-        res.json({ "msg": "error in getting paticular user booking data", "errorMsg": error.message })
-    }
-})
 
-
-//create new booking
-bookingRoutes.post("/create",authentication,authorisation(["patient"]) , async (req, res) => {
-    const data = req.body;
-    try {
-        let allBookings = await Bookingmodel.find({ doctorId: data.doctorId })
-        if (allBookings.length === 0) {
-            const addData = new Bookingmodel(data);
-            await addData.save();
+        let query = {};
+        if(req.body.role === "patient"){
+            query = { userId: req.body.userId };
         } else {
-            for (let i = 0; i < allBookings.length; i++) {
-                if (allBookings[i].bookingDate === data.bookingDate&&allBookings[i].bookingSlot === data.bookingSlot) {
-                        res.json({ "msg": "This Slot is Not Available." })
-                        return;
-                }
-            }
-            const addData = new Bookingmodel(data);
-            await addData.save();
+            query = { doctorId: req.body.userId };
         }
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: 'kumargunjan1116@gmail.com',
-                pass: process.env.emailPassword
+
+        console.log('Query:', query);
+        const appointments = await BookingModel.find(query).sort({ bookingDate: -1 });
+        console.log('Found appointments:', appointments);
+
+        res.status(200).json({ 
+            success: true,
+            msg: "Appointments retrieved successfully",
+            Data: appointments,
+            debug: {
+                query,
+                resultCount: appointments.length
             }
         });
-        const mailOptions = {
-            from: 'kumargunjan1116@gmail.com',
-            to: `${data.userEmail}`,
-            subject: 'Booking Confirmation from Rapid fit',
-            text: `Your Booking is confirmed on ${data.bookingDate} date.`
-        };
-        transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-                //console.log(error);
-                return res.status(500).json({ "msg": 'Error while sending conformation mail' });
-            } else {
-                return res.status(200).json({ "msg": "new booking created successfully Confiramtion sent to email" });
-            }
-        });
-
-    } catch (error) {
-        console.log("error from adding new booking data", error.message);
-        res.json({ msg: "error in adding new booking data", "errorMsg": error.message })
-    }
-})
-
-//removing the booking data
-bookingRoutes.delete("/remove/:id", authentication,authorisation(["patient"]),async (req, res) => {
-    const ID = req.params.id
-    //console.log(ID);
-
-    try {
-        let reqData=await Bookingmodel.find({_id:ID});
-        let specificDate = new Date(`${reqData[0].bookingDate}`);
-        let currentDate = new Date();
-        if(currentDate>specificDate){
-            return res.json({"msg":"Meeting Already Over"})
-        }else{
-            let timeDiff = Math.abs(currentDate.getTime() - specificDate.getTime());
-            let daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
-            if(daysDiff>=1){
-                await Bookingmodel.findByIdAndDelete({ _id: ID });
-                res.json({ "msg": `booking id of ${ID} is deleted succesfully` })
-            }else{
-                return res.json({"msg":"Our cancellation policy requires a minimum one-day notice for booking deletions."})
-            }
-            
-        }
         
     } catch (error) {
-        console.log("error from deleting booking data", error.message);
-        res.json({ "msg": "error in deleting of booking data", "errorMsg": error.message })
+        console.error("Error fetching appointments:", error);
+        res.status(500).json({ 
+            success: false,
+            msg: "Error in getting appointments", 
+            error: error.message,
+            debug: { body: req.body }
+        });
     }
-})
+});
 
-module.exports = {
-    bookingRoutes
-}
+// Create new booking
+bookingRoutes.post("/create", authentication, authorisation(["patient"]), async (req, res) => {
+    try {
+        const { doctorId, doctorName, bookingDate, bookingSlot } = req.body;
+        const userId = req.body.userId;
+        const userEmail = req.body.userEmail;
+
+        if (!doctorId || !bookingDate || !bookingSlot || !doctorName) {
+            return res.status(400).json({
+                success: false,
+                msg: "Missing required booking information"
+            });
+        }
+
+        // Check if slot is available
+        const existingBooking = await BookingModel.findOne({
+            doctorId,
+            bookingDate,
+            bookingSlot
+        });
+
+        if (existingBooking) {
+            return res.status(400).json({
+                success: false,
+                msg: "This time slot is already booked"
+            });
+        }
+
+        const newBooking = new BookingModel({
+            userId,
+            doctorId,
+            doctorName,
+            userEmail,
+            bookingDate,
+            bookingSlot
+        });
+
+        await newBooking.save();
+
+        res.status(201).json({
+            success: true,
+            msg: "Appointment booked successfully",
+            data: newBooking
+        });
+
+    } catch (error) {
+        console.error("Error creating booking:", error);
+        res.status(500).json({
+            success: false,
+            msg: "Error creating booking",
+            error: error.message
+        });
+    }
+});
+
+// Check if a time slot is already booked
+bookingRoutes.get("/check/:doctorId/:date/:slot", authentication, authorisation(["patient"]), async (req, res) => {
+    try {
+        const { doctorId, date, slot } = req.params;
+
+        // Check if slot is available
+        const existingBooking = await BookingModel.findOne({
+            doctorId,
+            bookingDate: date,
+            bookingSlot: slot
+        });
+
+        res.status(200).json({
+            success: true,
+            isBooked: !!existingBooking,
+            msg: existingBooking ? "Time slot is already booked" : "Time slot is available"
+        });
+
+    } catch (error) {
+        console.error("Error checking booking availability:", error);
+        res.status(500).json({
+            success: false,
+            msg: "Error checking booking availability",
+            error: error.message
+        });
+    }
+});
+
+// Get doctor's bookings for a specific date
+bookingRoutes.get("/doctor/:doctorId/:date", authentication, authorisation(["patient", "doctor"]), async (req, res) => {
+    try {
+        const { doctorId, date } = req.params;
+
+        const bookings = await BookingModel.find({
+            doctorId,
+            bookingDate: date
+        }).select('bookingSlot');
+
+        res.status(200).json({
+            success: true,
+            bookings: bookings
+        });
+
+    } catch (error) {
+        console.error("Error fetching doctor's bookings:", error);
+        res.status(500).json({
+            success: false,
+            msg: "Error fetching doctor's bookings",
+            error: error.message
+        });
+    }
+});
+
+// Delete booking
+bookingRoutes.delete("/remove/:id", authentication, authorisation(["patient","doctor"]), async (req, res) => {
+    try {
+        const bookingId = req.params.id;
+        const userId = req.body.userId;
+        const role = req.body.role;
+
+        // Find the booking
+        const booking = await BookingModel.findById(bookingId);
+        if (!booking) {
+            return res.status(404).json({
+                success: false,
+                msg: "Booking not found"
+            });
+        }
+
+        // Check if user is authorized to delete this booking
+        if (role === "patient" && booking.userId !== userId) {
+            return res.status(403).json({
+                success: false,
+                msg: "Not authorized to delete this booking"
+            });
+        }
+
+        if (role === "doctor" && booking.doctorId !== userId) {
+            return res.status(403).json({
+                success: false,
+                msg: "Not authorized to delete this booking"
+            });
+        }
+
+        await BookingModel.findByIdAndDelete(bookingId);
+
+        res.status(200).json({
+            success: true,
+            msg: "Booking deleted successfully"
+        });
+
+    } catch (error) {
+        console.error("Error deleting booking:", error);
+        res.status(500).json({
+            success: false,
+            msg: "Error deleting booking",
+            error: error.message
+        });
+    }
+});
+
+module.exports = { bookingRoutes };

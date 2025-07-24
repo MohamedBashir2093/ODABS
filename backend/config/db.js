@@ -1,7 +1,8 @@
 const mongoose=require("mongoose");
-require("dotenv").config();
+const path = require('path');
+require("dotenv").config({ path: path.resolve(__dirname, '../../.env') });
 
-const connection = mongoose.connect(process.env.mongoDbUrl);
+const connection = mongoose.connect(process.env.MONGODB_URI);
 
 module.exports={
     connection

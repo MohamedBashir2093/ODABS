@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard - Madina Hospital</title>
+    <link rel="stylesheet" href="./styles/dashboard.css">
+    <link rel="stylesheet" href="./styles/logo.css">
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <a href="./index.html">
+                <div class="logo-icon">MH</div>
+                <div class="logo-text">
+                    <span class="hospital-name">Madina Hospital</span>
+                    <span class="tagline">Caring for Life</span>
+                </div>
+            </a>
+        </div>
+        <div class="nav-links">
+            <span id="doctorName" class="user-name"></span>
+            <button onclick="logout()" class="logout-btn">Logout</button>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <div class="profile-section">
+                <div class="profile-image">
+                    <img src="./assets/doctor-avatar.png" alt="Doctor Profile" id="doctorAvatar">
+                </div>
+                <div class="profile-info">
+                    <h3 id="doctorFullName"></h3>
+                    <p id="doctorSpecialty"></p>
+                </div>
+            </div>
+            <div class="menu-items">
+                <button class="menu-item active" data-tab="dashboard">Dashboard</button>
+                <button class="menu-item" data-tab="appointments">Appointments</button>
+                <button class="menu-item" data-tab="profile">Profile</button>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <!-- Dashboard Tab -->
+            <div class="tab-content active" id="dashboard-tab">
+                <h2>Dashboard Overview</h2>
+                <div class="dashboard-stats">
+                    <div class="stat-card">
+                        <h3>Today's Appointments</h3>
+                        <div id="todayAppointments" class="stat-value">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Upcoming Appointments</h3>
+                        <div id="upcomingAppointments" class="stat-value">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total Patients</h3>
+                        <div id="totalPatients" class="stat-value">0</div>
+                    </div>
+                </div>
+                <div class="recent-appointments">
+                    <h3>Recent Appointments</h3>
+                    <div id="recentAppointmentsList">
+                        <!-- Recent appointments will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Appointments Tab -->
+            <div class="tab-content" id="appointments-tab">
+                <h2>Your Appointments</h2>
+                <div class="appointment-filters">
+                    <button class="filter-btn active" data-filter="today">Today</button>
+                    <button class="filter-btn" data-filter="upcoming">Upcoming</button>
+                    <button class="filter-btn" data-filter="past">Past</button>
+                </div>
+                <div id="appointmentsList" class="appointments-list">
+                    <!-- Appointments will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Profile Tab -->
+            <div class="tab-content" id="profile-tab">
+                <h2>Update Profile</h2>
+                <form id="profile-form" onsubmit="updateProfile(event)">
+                    <div class="form-group">
+                        <label for="profilePicture">Profile Picture:</label>
+                        <input type="file" id="profilePicture" accept="image/*">
+                        <div class="profile-preview">
+                            <img id="profilePreview" src="./assets/doctor-avatar.png" alt="Profile Preview">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Full Name:</label>
+                        <input type="text" id="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" required disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="specialty">Specialty:</label>
+                        <input type="text" id="specialty" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bio">Bio:</label>
+                        <textarea id="bio" rows="4"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <div class="availability-section">
+                            <label>Availability Status:</label>
+                            <div class="toggle-wrapper">
+                                <label class="switch">
+                                    <input type="checkbox" id="isAvailable">
+                                    <span class="slider round"></span>
+                                </label>
+                                <span id="availabilityStatus" class="status-text">Available</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="submit-btn">Update Profile</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="./script/doctor-dashboard.js"></script>
+</body>
+</html>

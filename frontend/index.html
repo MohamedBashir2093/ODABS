@@ -5,33 +5,493 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
     <link rel="stylesheet" href="./styles/index.css">
+    <link rel="stylesheet" href="./styles/logo.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .welcome-section {
+            padding: 100px 20px;
+            background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%);
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><path fill="%23FFFFFF" fill-opacity="0.05" d="M45,-78C59.2,-70.3,71.9,-60.2,79.6,-47.1C87.3,-34,89.9,-17,89.4,-0.3C88.9,16.4,85.3,32.8,77.7,47.2C70.1,61.7,58.5,74.2,44.2,79.7C29.9,85.2,14.9,83.7,0.7,82.5C-13.5,81.3,-27.1,80.4,-41.1,75.6C-55.1,70.8,-69.5,62,-77.3,48.9C-85.1,35.8,-86.3,18,-84.5,1.1C-82.7,-15.9,-77.9,-31.7,-69.7,-45.7C-61.5,-59.7,-49.9,-71.8,-36.2,-79.8C-22.4,-87.8,-6.5,-91.7,8.8,-89.1C24,-86.5,48,-85.6,45,-78Z" transform="translate(100 100)" /></svg>') center/cover no-repeat;
+            opacity: 0.1;
+        }
+
+        .welcome-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .welcome-content h1 {
+            font-size: 3.2rem;
+            color: white;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .welcome-content p {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .welcome-buttons {
+            display: flex;
+            justify-content: center;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1rem;
+            min-width: 200px;
+        }
+
+        .primary-btn {
+            background-color: white;
+            color: #1565c0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .primary-btn:hover {
+            background-color: #f8f9fa;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Featured Doctors Section */
+        .featured-doctors {
+            padding: 80px 20px;
+            background-color: #f8f9fa;
+        }
+
+        .featured-doctors h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            color: #2c3e50;
+        }
+
+        .doctors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .doctor-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .doctor-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .doctor-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .doctor-info {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .doctor-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .doctor-info .specialty {
+            color: #3498db;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .doctor-info .experience {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Features Section */
+        .features {
+            width: 100%;
+            padding: 40px 20px;
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .features-heading {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .features-heading h2 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+        }
+
+        .feature-cards-container {
+            width: 100%;
+            max-width: 100%;
+            padding: 0 20px;
+        }
+
+        .feature-cards {
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+            width: 100%;
+        }
+
+        .feature-card {
+            flex: 1;
+            padding: 30px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card i {
+            font-size: 2.5rem;
+            color: #1e88e5;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Footer Styles */
+        .footer {
+            background-color: #2c3e50;
+            color: white;
+            padding: 30px 0 15px;
+            margin-top: 30px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 0 30px;
+        }
+
+        .footer-section {
+            padding: 10px;
+        }
+
+        .footer-section h3 {
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            color: #1e88e5;
+            padding-bottom: 6px;
+            border-bottom: 2px solid #1e88e5;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #ecf0f1;
+            line-height: 1.4;
+            margin-bottom: 8px;
+            text-decoration: none;
+            display: block;
+            font-size: 0.95rem;
+        }
+
+        .contact-info i {
+            margin-right: 10px;
+            color: #1e88e5;
+            width: 16px;
+        }
+
+        .contact-info p {
+            display: flex;
+            align-items: center;
+            padding: 2px 0;
+        }
+
+        .quick-links a {
+            padding: 4px 0;
+            transition: all 0.3s ease;
+        }
+
+        .quick-links a:hover {
+            color: #1e88e5;
+            padding-left: 8px;
+        }
+
+        .emergency-contact {
+            background-color: #34495e;
+            padding: 8px;
+            border-radius: 6px;
+            margin-top: 12px;
+        }
+
+        .emergency-contact h4 {
+            color: #1e88e5;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 12px;
+            border-top: 1px solid #34495e;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .welcome-section {
+                padding: 60px 20px;
+            }
+
+            .welcome-content h1 {
+                font-size: 2.4rem;
+            }
+
+            .welcome-content p {
+                font-size: 1.1rem;
+            }
+
+            .btn {
+                width: 80%;
+                text-align: center;
+                padding: 12px 25px;
+            }
+
+            .featured-doctors h2 {
+                font-size: 2rem;
+            }
+
+            .features-heading {
+                font-size: 2.5rem;
+                margin-bottom: 40px;
+            }
+
+            .feature-cards {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .feature-card {
+                width: 100%;
+                max-width: 350px;
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+                padding: 0 15px;
+                gap: 15px;
+            }
+            
+            .footer-section {
+                padding: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer {
+                padding: 25px 0 12px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Doctor Patient Appointment Booking</h1>
     <header>
-        <nav class="navBar">
-            <ul>
-                <li>
-                    <a href="index.html">Home Page</a>
-                </li>
-                <li>
-                    <a href="register.html">Register Page</a>
-                </li>
-                <li>
-                    <a href="login.html">Login Page</a>
-                </li>
-                <li>
-                    <a href="doctors.html">Doctor Page</a>
-                </li>
-                <li>
-                    <a href="appointment.html">Appointment Page</a>
-                </li>
-            </ul>
-        </nav>
+        <!-- <div class="logo-container">
+            <div class="logo"> -->
+                <a href="./index.html">
+                    <div class="logo-icon">AF</div>
+                    <div class="logo-text">
+                        <span style="font-size: medium;" class="hospital-name">Afya connect</span>
+                        <!-- <span class="tagline">Caring for Life</span> -->
+                    </div>
+                </a>
+            </div>
+
+            <nav class="navBar">
+                <ul>
+                    <li>
+                        <a href="index.html">Home </a>
+                    </li>
+                    <li>
+                        <a href="about.html">About</a>
+                    </li>
+                    <li>
+                        <a href="contact.html">Contact</a>
+                    </li>
+                    <li>
+                        <a href="register.html">Register </a>
+                    </li>
+                    <li>
+                        <a href="login.html">Login </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </header>
-    <div id="image">
-        <img src="https://thumbs.dreamstime.com/b/hospital-building-typical-modern-large-urban-43153826.jpg" alt="hospital-img">
-    </div>
+
+    <main>
+        <!-- Welcome Message Section -->
+        <section class="welcome-section">
+            <div class="welcome-content">
+                <h1>Welcome to Afya Connect</h1>
+                <p>Your trusted partner in healthcare, providing comprehensive medical services with a focus on patient comfort and well-being.</p>
+                <div class="welcome-buttons">
+                    <a href="login.html" class="btn primary-btn">Book Appointment</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Doctors Section -->
+        <section id="featured-doctors" class="featured-doctors">
+            <h2>Our Expert Doctors</h2>
+            <div class="doctors-grid">
+                <div class="doctor-card">
+                    <img src="https://img.freepik.com/free-photo/woman-doctor-wearing-lab-coat-with-stethoscope-isolated_1303-29791.jpg" alt="Dr. Sarah Johnson">
+                    <div class="doctor-info">
+                        <h3>Dr. Sarah Johnson</h3>
+                        <p class="specialty">Cardiologist</p>
+                        <p class="experience">15+ Years Experience</p>
+                    </div>
+                </div>
+                <div class="doctor-card">
+                    <img src="https://img.freepik.com/free-photo/doctor-with-his-arms-crossed-white-background_1368-5790.jpg" alt="Dr. Michael Chen">
+                    <div class="doctor-info">
+                        <h3>Dr. Michael Chen</h3>
+                        <p class="specialty">Pediatrician</p>
+                        <p class="experience">12+ Years Experience</p>
+                    </div>
+                </div>
+                <div class="doctor-card">
+                    <img src="https://img.freepik.com/free-photo/female-doctor-hospital-with-stethoscope_23-2148827775.jpg" alt="Dr. Emily Brown">
+                    <div class="doctor-info">
+                        <h3>Dr. Emily Brown</h3>
+                        <p class="specialty">Dermatologist</p>
+                        <p class="experience">10+ Years Experience</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features">
+            <div class="features-heading">
+                <h2>Why Choose Us</h2>
+            </div>
+            <div class="feature-cards-container">
+                <div class="feature-cards">
+                    <div class="feature-card">
+                        <i class="fas fa-calendar-check"></i>
+                        <h3>Easy Booking</h3>
+                        <p>Book appointments online anytime, anywhere</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-user-md"></i>
+                        <h3>Expert Doctors</h3>
+                        <p>Qualified and experienced medical professionals</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-clock"></i>
+                        <h3>Flexible Hours</h3>
+                        <p>Choose from various available time slots</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contact Information</h3>
+                <div class="contact-info">
+                    <p><i class="fas fa-map-marker-alt"></i> Hala Street, Jogoo District, Wajir Town, Kenya</p>
+                    <p><i class="fas fa-phone"></i> Emergency: 0722334455</p>
+                    <p><i class="fas fa-phone-alt"></i> Reception: 0798765432</p>
+                    <p><i class="fas fa-envelope"></i> info@madinahospital.com</p>
+                </div>
+                <div class="emergency-contact">
+                    <h4>24/7 Emergency</h4>
+                    <p>Call: 0722334455</p>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <div class="quick-links">
+                    <a href="#">Home</a>
+                    <a href="about.html">About Us</a>
+                    <a href="contact.html">Contact Us</a>
+                   
+                    <a href="#">Book Appointment</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Working Hours</h3>
+                <p><strong>Regular Hours:</strong></p>
+                <p>Monday - Friday: 8:00 AM - 8:00 PM</p>
+                <p>Saturday: 9:00 AM - 6:00 PM</p>
+                <p>Sunday: Emergency Only</p>
+                <p><strong>Emergency Unit:</strong></p>
+                <p>24 hours, 7 days a week</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 Madina Hospital. All rights reserved.</p>
+        </div>
+    </footer>
 </body>
 </html>
-<script src="./script/index.js"></script>

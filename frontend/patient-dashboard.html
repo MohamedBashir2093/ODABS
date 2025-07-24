@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard - Madina Hospital</title>
+    <link rel="stylesheet" href="./styles/dashboard.css">
+    <link rel="stylesheet" href="./styles/logo.css">
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <a href="./index.html">
+                <div class="logo-icon">MH</div>
+                <div class="logo-text">
+                    <span class="hospital-name">Madina Hospital</span>
+                    <span class="tagline">Caring for Life</span>
+                </div>
+            </a>
+        </div>
+        <div class="nav-links">
+            <span id="patientName" class="user-name"></span>
+            <button onclick="logout()" class="logout-btn">Logout</button>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <div class="profile-section">
+                <div class="profile-image">
+                    <img src="./assets/patient-avatar.png" alt="Patient Profile" id="patientAvatar">
+                </div>
+                <div class="profile-info">
+                    <h3 id="patientFullName"></h3>
+                    <p id="patientEmail"></p>
+                </div>
+            </div>
+            <div class="menu-items">
+                <button class="menu-item active" data-tab="appointments">My Appointments</button>
+                <button class="menu-item" data-tab="book">Book Appointment</button>
+                <button class="menu-item" data-tab="doctors">Find Doctors</button>
+                <button class="menu-item" data-tab="profile">Profile</button>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <!-- Appointments Tab -->
+            <div class="tab-content active" id="appointments-tab">
+                <h2>Your Appointments</h2>
+                <div class="appointment-filters">
+                    <button class="filter-btn active" data-filter="today">Today</button>
+                    <button class="filter-btn" data-filter="upcoming">Upcoming</button>
+                    <button class="filter-btn" data-filter="past">Past</button>
+                </div>
+                <div id="appointmentsList" class="appointments-list">
+                    <!-- Appointments will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Book Appointment Tab -->
+            <div class="tab-content" id="book-tab">
+                <h2>Book New Appointment</h2>
+                <div class="booking-container">
+                    <form id="bookingForm" class="booking-form">
+                        <div class="form-group">
+                            <label for="doctorSelect">Select Doctor:</label>
+                            <select id="doctorSelect" required>
+                                <option value="">Choose a doctor</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="appointmentDate">Select Date:</label>
+                            <input type="date" id="appointmentDate" required min="">
+                        </div>
+                        <div class="form-group">
+                            <label>Available Time Slots:</label>
+                            <div id="timeSlots" class="time-slots">
+                                <!-- Time slots will be loaded here -->
+                            </div>
+                        </div>
+                        <button type="submit" class="submit-btn">Book Appointment</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Find Doctors Tab -->
+            <div class="tab-content" id="doctors-tab">
+                <h2>Find Doctors</h2>
+                <div class="search-filters">
+                    <div class="filter-options">
+                        <select id="specialtyFilter" class="specialty-select">
+                            <option value="">All Specialties</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="doctorsList" class="doctors-list">
+                    <!-- Doctors will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Profile Tab -->
+            <div class="tab-content" id="profile-tab">
+                <div class="profile-section">
+                    <h2>Profile Information</h2>
+                    <div class="profile-form">
+                        <div class="profile-picture-section">
+                            <img id="profilePreview" src="./assets/user-avatar.png" alt="Profile Preview" class="profile-preview">
+                            <input type="file" id="profilePicture" accept="image/*">
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number:</label>
+                            <input type="tel" id="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Address:</label>
+                            <textarea id="address" rows="3" required></textarea>
+                        </div>
+                        <button onclick="updateProfile()" class="update-btn">Update Profile</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./script/patient-dashboard.js"></script>
+</body>
+</html>

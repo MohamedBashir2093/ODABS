@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Madina Hospital</title>
+    <link rel="stylesheet" href="./styles/index.css">
+    <link rel="stylesheet" href="./styles/logo.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .contact-hero {
+            padding: 100px 20px;
+            background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%);
+            text-align: center;
+            color: white;
+        }
+
+        .contact-hero h1 {
+            font-size: 3.2rem;
+            margin-bottom: 20px;
+        }
+
+        .contact-hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .contact-content {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .contact-info {
+            padding: 30px;
+        }
+
+        .contact-info h2 {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 30px;
+        }
+
+        .info-item i {
+            font-size: 1.5rem;
+            color: #1e88e5;
+            margin-right: 15px;
+            width: 30px;
+        }
+
+        .info-item .details {
+            flex: 1;
+        }
+
+        .info-item .details h3 {
+            font-size: 1.2rem;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .info-item .details p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .contact-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-form h2 {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: #1e88e5;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background: #1565c0;
+        }
+
+        /* Footer Styles */
+        .footer {
+            background-color: #2c3e50;
+            color: white;
+            padding: 30px 0 15px;
+            margin-top: 30px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 0 30px;
+        }
+
+        .footer-section {
+            padding: 10px;
+        }
+
+        .footer-section h3 {
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            color: #1e88e5;
+            padding-bottom: 6px;
+            border-bottom: 2px solid #1e88e5;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #ecf0f1;
+            line-height: 1.4;
+            margin-bottom: 8px;
+            text-decoration: none;
+            display: block;
+            font-size: 0.95rem;
+        }
+
+        .contact-info i {
+            margin-right: 10px;
+            color: #1e88e5;
+            width: 16px;
+        }
+
+        .contact-info p {
+            display: flex;
+            align-items: center;
+            padding: 2px 0;
+        }
+
+        .quick-links a {
+            padding: 4px 0;
+            transition: all 0.3s ease;
+        }
+
+        .quick-links a:hover {
+            color: #1e88e5;
+            padding-left: 8px;
+        }
+
+        .emergency-contact {
+            background-color: #34495e;
+            padding: 8px;
+            border-radius: 6px;
+            margin-top: 12px;
+        }
+
+        .emergency-contact h4 {
+            color: #1e88e5;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 12px;
+            border-top: 1px solid #34495e;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .contact-hero h1 {
+                font-size: 2.4rem;
+            }
+
+            .contact-hero p {
+                font-size: 1.1rem;
+            }
+
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+                padding: 0 15px;
+                gap: 15px;
+            }
+            
+            .footer-section {
+                padding: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer {
+                padding: 25px 0 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <div class="logo">
+                <a href="./index.html">
+                    <div class="logo-icon">MH</div>
+                    <div class="logo-text">
+                        <span class="hospital-name">Madina Hospital</span>
+                        <span class="tagline">Caring for Life</span>
+                    </div>
+                </a>
+            </div>
+
+            <nav class="navBar">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="register.html">Register</a></li>
+                    <li><a href="login.html">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="contact-hero">
+            <h1>Contact Us</h1>
+            <p>We're here to help! Reach out to us with any questions or concerns.</p>
+        </section>
+
+        <div class="contact-content">
+            <div class="contact-info">
+                <h2>Get in Touch</h2>
+                <div class="info-item">
+                    <i class="fas fa-phone"></i>
+                    <div class="details">
+                        <h3>Phone</h3>
+                        <p>Emergency: 0722334455<br>Reception: 0798765432</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-envelope"></i>
+                    <div class="details">
+                        <h3>Email</h3>
+                        <p>info@madinahospital.com<br>support@madinahospital.com</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-clock"></i>
+                    <div class="details">
+                        <h3>Hours</h3>
+                        <p>Monday - Friday: 8:00 AM - 8:00 PM<br>Saturday: 9:00 AM - 5:00 PM<br>Sunday: Emergency Only</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-form">
+                <h2>Send us a Message</h2>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contact Information</h3>
+                <div class="contact-info">
+                    <p><i class="fas fa-map-marker-alt"></i> Hala Street, Jogoo District, Wajir Town, Kenya</p>
+                    <p><i class="fas fa-phone"></i> Emergency: 0722334455</p>
+                    <p><i class="fas fa-phone-alt"></i> Reception: 0798765432</p>
+                    <p><i class="fas fa-envelope"></i> info@madinahospital.com</p>
+                </div>
+                <div class="emergency-contact">
+                    <h4>24/7 Emergency</h4>
+                    <p>Call: 0722334455</p>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <div class="quick-links">
+                    <a href="index.html">Home</a>
+                    <a href="about.html">About Us</a>
+                    <a href="contact.html">Contact Us</a>
+                    
+                    <a href="index.html">Book Appointment</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Working Hours</h3>
+                <p><strong>Regular Hours:</strong></p>
+                <p>Monday - Friday: 8:00 AM - 8:00 PM</p>
+                <p>Saturday: 9:00 AM - 6:00 PM</p>
+                <p>Sunday: Emergency Only</p>
+                <p><strong>Emergency Unit:</strong></p>
+                <p>24 hours, 7 days a week</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 Madina Hospital. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
