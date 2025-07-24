@@ -15,8 +15,8 @@ const app = express();
 // Define allowed origins
 const allowedOrigins = [
     "http://localhost:5173",
-    "http://localhost:3000",
-    "https://odabs-frontend.vercel.app"
+    "http://localhost:5000",
+    "https://odabs.vercel.app"
 ];
 
 // Apply CORS with allowed origins
