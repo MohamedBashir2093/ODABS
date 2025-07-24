@@ -1,4 +1,4 @@
-const baseURL = "http://localhost:5000";
+const baseUrl = "https://odabs.onrender.com";
 
 // Check if user is logged in and is a patient
 function checkAuth() {

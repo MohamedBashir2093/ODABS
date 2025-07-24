@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const {Server} = require("socket.io");
+const { Server } = require("socket.io");
 const http = require("http");
 const { ExpressPeerServer } = require('peer');
 const path = require("path");
@@ -12,55 +12,79 @@ const { scheduleRouter } = require("./routes/scheduleRoute");
 
 const app = express();
 
-app.use(cors());
+// Define allowed origins
+const allowedOrigins = [
+    "http://localhost:5173",
+    "http://localhost:3000",
+    "https://odabs-frontend.vercel.app"
+];
+
+// Apply CORS with allowed origins
+app.use(cors({
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
+    credentials: true
+}));
+
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use(express.static('public'));
+app.set('view engine', 'ejs');
 
+// Create HTTP server
 const server = http.createServer(app);
 
+// Setup Socket.io with allowed frontend origins
 const io = new Server(server, {
     cors: {
-        origin: "*",
-        methods: ["GET", "POST"]
+        origin: allowedOrigins,
+        methods: ["GET", "POST"],
+        credentials: true
     }
 });
 
-const peerServer = ExpressPeerServer(server, {
-    debug: true,
-});
+// Setup PeerJS server
+const peerServer = ExpressPeerServer(server, { debug: true });
 
+// Routes
 app.get("/", (req, res) => {
-    res.send("Welcome to Home Route")
+    res.send("Welcome to Home Route");
 });
 
 app.use("/user", userRoute);
 app.use("/booking", bookingRoutes);
 app.use("/schedule", scheduleRouter);
 
-app.set('view engine', 'ejs');
-app.use(express.static('public'));
-
+// Video call route
 app.get("/:room", (req, res) => {
-    res.render('room', { roomId: req.params.room })
+    res.render('room', { roomId: req.params.room });
 });
 
+// Socket.io connection handler
 io.on("connection", (socket) => {
     socket.on("join-room", (roomId, userId, userName) => {
         socket.join(roomId);
         socket.broadcast.to(roomId).emit("user-connected", userId);
+
         socket.on("message", (message) => {
             io.to(roomId).emit("createMessage", message, userName);
         });
     });
 });
 
-server.listen(process.env.PORT, async () => {
+// Start the server
+server.listen(process.env.PORT || 5000, async () => {
     try {
         await connection;
-        console.log("Connected to DB");
-        console.log(`Server is running at port ${process.env.PORT}`);
+        console.log("✅ Connected to DB");
+        console.log(`🚀 Server is running on port ${process.env.PORT || 5000}`);
     } catch (error) {
-        console.log("Not able to connect to DB");
-        console.log(error);
+        console.log("❌ Failed to connect to DB");
+        console.error(error);
     }
 });

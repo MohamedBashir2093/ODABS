@@ -1,4 +1,4 @@
-let baseUrl=`http://localhost:5000`;
+const baseUrl = "https://odabs.onrender.com";
 
 let doctorBtn=document.getElementById("doctor");
 let patientBtn=document.getElementById("patient");

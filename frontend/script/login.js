@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:5000";
+const baseUrl = "https://odabs.onrender.com";
 
 // Show loading state
 function showLoading() {

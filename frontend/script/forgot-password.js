@@ -1,4 +1,4 @@
-const baseURL = "http://localhost:5000";
+const baseUrl = "https://odabs.onrender.com";
 
 document.getElementById('resetPasswordForm').addEventListener('submit', async (e) => {
     e.preventDefault();

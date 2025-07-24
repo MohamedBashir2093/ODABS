@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:5000";
+const baseUrl = "https://odabs.onrender.com";
 
 // Utility functions
 function showLoading(button) {
